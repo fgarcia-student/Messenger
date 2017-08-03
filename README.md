@@ -13,6 +13,7 @@ I built this project while interviewing for positions as a Front-End Web Develop
 ## Installation
 
 To install this either clone my repo or download it as a zip. In console run the following commands:
+
 Using yarn
 `Run 'yarn install' to download all of the required packages`
 
@@ -22,20 +23,22 @@ Once complete you should be able to launch the application using `yarn start`
 
 This project was built using the following:
 
-..* React
-..* Redux
-..* Node
-..* Express
-..* MongoDB
+* React
+* Redux
+* Node
+* Express
+* MongoDB
 
 ## Next Steps
 
 Currently I am working ont the following:
 
-- [] Group Chats!
-- [] User Online/Offline indicator!
-- [] Find Nearby Users!
-- [] Recommend new friends based on current friends list!
+- [ ] Launch App!
+- [ ] Live on Heroku!
+- [ ] Group Chats!
+- [ ] User Online/Offline indicator!
+- [ ] Find Nearby Users!
+- [ ] Recommend new friends based on current friends list!
 
 ## License
 
