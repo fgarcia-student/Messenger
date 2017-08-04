@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
-import {helperValidateEmail,helperValidatePW,helperValidateCell} from '../constants/helpers';
+import {helperValidateEmail,helperValidatePW,helperValidateCell} from '../../../constants/helpers';
 
 class RegisterForm extends Component{
   constructor(props){

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button,Layout} from 'athenaeum';
-import {LOGIN,REGISTER} from '../constants/globals';
+import {LOGIN,REGISTER} from '../../constants/globals';
 
 const LoginRegisterBtns = ({handleClick, active}) => {
 

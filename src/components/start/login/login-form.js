@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
-import {helperValidateEmail,helperValidatePW} from '../constants/helpers';
+import {helperValidateEmail,helperValidatePW} from '../../../constants/helpers';
 
 
 class LoginForm extends Component {

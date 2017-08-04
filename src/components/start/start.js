@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Title from './title';
+import Title from '../common/title';
 import LoginRegisterBtns from './login-register-buttons';
 import Form from './form-container';
-import {LOGIN,REGISTER} from '../constants/globals';
+import {LOGIN,REGISTER} from '../../constants/globals';
 
 class Start extends Component {
   constructor(props){

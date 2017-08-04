@@ -1,7 +1,7 @@
 import React from 'react';
-import LoginForm from '../components/login-form';
-import RegisterForm from '../components/register-form';
-import {LOGIN,REGISTER} from '../constants/globals';
+import LoginForm from './login/login-form';
+import RegisterForm from './register/register-form';
+import {LOGIN,REGISTER} from '../../constants/globals';
 
 const Form = ({active}) => {
   if(active === LOGIN){
