@@ -161,10 +161,10 @@ class RegisterForm extends Component{
 
   render(){
     return(
-      <div id="register-form">
+      <div id="register-form" className="col-xs-12">
         <Animate animations="slideDown">
           <form id="FORM" onSubmit={this.validateForm}>
-            <GenericCard variant="box" className="card">
+            <GenericCard variant="box">
               <Layout smallCols={[12]}>
                 <TextField
                   id="NAME"

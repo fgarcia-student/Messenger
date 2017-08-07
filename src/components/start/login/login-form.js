@@ -80,10 +80,10 @@ class LoginForm extends Component {
 
   render(){
     return (
-      <div id="login-form">
+      <div id="login-form" className="col-xs-12">
         <Animate animations="slideDown">
           <form id="FORM" onSubmit={this.validateForm}>
-            <GenericCard className="card" variant="box">
+            <GenericCard variant="box">
               <Layout smallCols={[12]}>
                 <TextField
                   id="EMAIL"

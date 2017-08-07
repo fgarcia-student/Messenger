@@ -25,8 +25,8 @@ class Start extends Component {
 
   render(){
     return (
-      <div>
-        <Title title="#Messenger"/>
+      <div className="container">
+        <Title title="#MESSENGER"/>
         <LoginRegisterBtns handleClick={this.handleClick} active={this.state.clicked} />
         <Form active={this.state.clicked}/>
       </div>

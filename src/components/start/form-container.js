@@ -5,9 +5,17 @@ import {LOGIN,REGISTER} from '../../constants/globals';
 
 const Form = ({active}) => {
   if(active === LOGIN){
-    return <LoginForm />
+    return (
+      <div className="row">
+        <LoginForm />
+      </div>
+    );
   }else if(active === REGISTER){
-    return <RegisterForm />
+    return (
+      <div className="row">
+        <RegisterForm />
+      </div>
+    );
   }
 }
 
