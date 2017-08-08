@@ -213,6 +213,7 @@ class RegisterForm extends Component{
                   className="input-spacer"
                   label="PASSWORD"
                   placeholder="Be smart. Use a good password."
+                  tooltip={()=>{alert(`Password must have:\nAt least 1 capital letter\nAt least 1 lowercase letter\nAt least 1 digit\nAt least 1 of the approved special characters[!@#$%^&*]\nAt least 10 characters`)}}
                   input={{
                     type: 'password',
                     value: this.state.pw,
