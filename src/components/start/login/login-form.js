@@ -56,9 +56,10 @@ class LoginForm extends Component {
   }
 
   onSubmit(values){
-    console.log(values);
-    this.props.loginUser(values);
-    console.log(this.props.user);
+    this.props.loginUser(values, () => {
+      console.log(this.props.user);
+      //callback not firing, axios returning undefined when implemented...
+    });
   }
 }
 

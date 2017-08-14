@@ -84,13 +84,10 @@ class RegisterForm extends Component{
   }
 
   onSubmit(values){
-    console.log(values);
-    //submit form
-    this.props.registerUser(values);
-    // , () => {
-    //   this.props.history.push('/home');
-    // }); will use when routing...for now log userid
-    console.log(this.props.user);//working...
+    this.props.registerUser(values, () => {
+      console.log(this.props.user);
+      //callback not firing, axios returning undefined when implemented...
+    });
   }
 }
 
