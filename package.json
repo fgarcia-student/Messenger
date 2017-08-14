@@ -11,7 +11,8 @@
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.10",
     "redux": "^3.7.2",
-    "redux-form": "^7.0.3"
+    "redux-form": "^7.0.3",
+    "redux-promise": "^0.5.3"
   },
   "scripts": {
     "start": "yarn build && cd server && yarn start",
