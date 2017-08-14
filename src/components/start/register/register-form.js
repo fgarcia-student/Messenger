@@ -1,259 +1,61 @@
 import React, {Component} from 'react';
 import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
 import {helperValidateEmail,helperValidatePW,helperValidateCell} from '../../../constants/helpers';
+import {connect} from 'react-redux';
+import {Field, reduxForm} from 'redux-form';
+import {registerUser} from '../../../actions';
 
 class RegisterForm extends Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      name: '',
-      nameErrMsg: '',
-      nameErr: true,
-      email: '',
-      emailErrMsg: '',
-      emailErr: true,
-      verifyEmail: '',
-      verifyEmailErrMsg: '',
-      verifyEmailErr: true,
-      pw: '',
-      pwErrMsg: '',
-      pwErr: true,
-      verifyPw: '',
-      verifyPwErrMsg: '',
-      verifyPwErr: true,
-      cellphone: '',
-      cellphoneErrMsg: '',
-      cellphoneErr: true
-    }
-
-    this.validateForm = this.validateForm.bind(this);
-  }
-
-  validateForm(e){
-    let {name,nameErrMsg,nameErr,
-         email,emailErrMsg,emailErr,
-         verifyEmail,verifyEmailErrMsg,verifyEmailErr,
-         pw,pwErrMsg,pwErr,
-         verifyPw,verifyPwErrMsg,verifyPwErr,
-         cellphone,cellphoneErrMsg,cellphoneErr} = this.state;
-
-    switch (e.target.id) {
-      case 'NAME':{
-        name = e.target.value;
-        nameErr = true;
-        if(name === ''){
-          nameErrMsg = 'NAME CANNOT BE EMPTY';
-        }else{
-          nameErrMsg = '';
-          nameErr = false;
-        }
-        break;
-      }
-      case 'EMAIL':{
-        email = e.target.value.trim();
-        emailErr = true;
-        if(email === ''){
-          emailErrMsg = 'EMAIL CANNOT BE EMPTY';
-        }else if(!helperValidateEmail(email)){
-          emailErrMsg = 'IMPROPER EMAIL FORMAT';
-        }else{
-          if(verifyEmail !== email){
-            verifyEmailErrMsg = 'EMAILS DO NOT MATCH';
-            verifyEmailErr = true;
-          }else{
-            verifyEmailErrMsg = '';
-            verifyEmailErr = false;
-          }
-          emailErrMsg = '';
-          emailErr = false;
-        }
-        break;
-      }
-      case 'EMAIL_VER':{
-        verifyEmail = e.target.value.trim();
-        verifyEmailErr = true;
-        if(verifyEmail !== email){
-          verifyEmailErrMsg = 'EMAILS DO NOT MATCH';
-        }else{
-          verifyEmailErrMsg = '';
-          verifyEmailErr = false;
-        }
-        break;
-      }
-      case 'PW':{
-        pw = e.target.value;
-        pwErr = true;
-        if(pw === ''){
-          pwErrMsg = 'PASSWORD CANNOT BE EMPTY';
-        }else if(!helperValidatePW(pw).lower){
-          pwErrMsg = 'PASSWORD NEEDS AT LEAST 1 LOWER CASE LETTER';
-        }else if(!helperValidatePW(pw).upper){
-          pwErrMsg = 'PASSWORD NEEDS AT LEAST 1 UPPER CASE LETTER';
-        }else if(!helperValidatePW(pw).digit){
-          pwErrMsg = 'PASSWORD NEEDS AT LEAST 1 DIGIT';
-        }else if(!helperValidatePW(pw).special){
-          pwErrMsg = 'PASSWORD NEEDS AT LEAST 1 SPECIAL CHARACTER (!,@,#,$,%,^,&,*)';
-        }else if(!helperValidatePW(pw).limit){
-          pwErrMsg = 'PASSWORD NEEDS AT LEAST 10 CHARACTERS';
-        }else{
-          if(verifyPw !== pw){
-            verifyPwErrMsg = 'PASSWORDS DO NOT MATCH';
-            verifyPwErr = true;
-          }else{
-            verifyPwErrMsg = '';
-            verifyPwErr = false;
-          }
-          pwErrMsg = '';
-          pwErr = false;
-        }
-        break;
-      }
-      case 'PW_VER':{
-        verifyPw = e.target.value;
-        verifyPwErr = true;
-        if(verifyPw !== pw){
-          verifyPwErrMsg = 'PASSWORDS DO NOT MATCH';
-        }else{
-          verifyPwErrMsg = '';
-          verifyPwErr = false;
-        }
-        break;
-      }
-      case 'CELL':{
-        cellphone = e.target.value;
-        cellphoneErr = true;
-        if(cellphone === '___-___-____' || cellphone === ''){
-          cellphoneErrMsg = 'CELLPHONE CANNOT BE EMPTY'
-        }else if(!helperValidateCell(cellphone)){
-          cellphoneErrMsg = 'CELLPHONE CANNOT BE INCOMPLETE'
-        }else{
-          cellphoneErrMsg = '';
-          cellphoneErr = false;
-        }
-        break;
-      }
-      case 'FORM':{
-        //if all other fields valid
-        e.preventDefault();
-        let formIsValid = (!nameErr && !emailErr && !verifyEmailErr && !pwErr && !verifyPwErr && !cellphoneErr ) ? true : false;
-        if(formIsValid){
-          //submit form
-          console.log('valid form');
-        }else{
-          //display error message
-          console.log('invalid form');
-
-        }
-        break;
-      }
-      default:
-
-    }
-
-    this.setState({name,nameErrMsg,nameErr,
-                   email,emailErrMsg,emailErr,
-                   verifyEmail,verifyEmailErrMsg,verifyEmailErr,
-                   pw,pwErrMsg,pwErr,
-                   verifyPw,verifyPwErrMsg,verifyPwErr,
-                   cellphone,cellphoneErrMsg,cellphoneErr});
-
-  }
 
   render(){
+    const {handleSubmit} = this.props;
+
     return(
       <div id="register-form" className="col-xs-12">
         <Animate animations="slideDown">
-          <form id="FORM" onSubmit={this.validateForm}>
+          <form id="FORM" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
             <GenericCard variant="box">
               <Layout smallCols={[12]}>
-                <TextField
-                  id="NAME"
-                  className="input-spacer"
+                <Field
+                  name="name"
                   label="FULL NAME"
-                  placeholder="ME! Francisco Garcia"
-                  input={{
-                    value: this.state.name,
-                    onChange: this.validateForm
-                  }}
-                  meta={{
-                    error: this.state.nameErrMsg,
-                    touched: this.state.nameErr
-                  }}
+                  placeholder="First and Last Name"
+                  component={this.renderField}
                 />
-                <TextField
-                  id="EMAIL"
-                  className="input-spacer"
+                <Field
+                  name="email"
                   label="EMAIL"
                   placeholder="example@domain.com"
-                  input={{
-                    value: this.state.email,
-                    onChange: this.validateForm
-                  }}
-                  meta={{
-                    error: this.state.emailErrMsg,
-                    touched: this.state.emailErr
-                  }}
+                  component={this.renderField}
                 />
-                <TextField
-                  id="EMAIL_VER"
-                  className="input-spacer"
+                <Field
+                  name="verifyEmail"
                   label="VERIFY EMAIL"
-                  placeholder="example@domain.com"
-                  input={{
-                    value: this.state.verifyEmail,
-                    onChange: this.validateForm
-                  }}
-                  meta={{
-                    error: this.state.verifyEmailErrMsg,
-                    touched: this.state.verifyEmailErr
-                  }}
+                  placeholder="Match email input above"
+                  component={this.renderField}
                 />
-                <TextField
-                  id="PW"
-                  className="input-spacer"
+                <Field
+                  name="pw"
                   label="PASSWORD"
-                  placeholder="Be smart. Use a good password."
+                  type="password"
+                  placeholder="Follow password rules in tooltip"
                   tooltip={()=>{alert(`Password must have:\nAt least 1 capital letter\nAt least 1 lowercase letter\nAt least 1 digit\nAt least 1 of the approved special characters[!@#$%^&*]\nAt least 10 characters`)}}
-                  input={{
-                    type: 'password',
-                    value: this.state.pw,
-                    onChange: this.validateForm
-                  }}
-                  meta={{
-                    error: this.state.pwErrMsg,
-                    touched: this.state.pwErr
-                  }}
+                  component={this.renderField}
                 />
-                <TextField
-                  id="PW_VER"
-                  className="input-spacer"
+                <Field
+                  name="verifyPw"
                   label="VERIFY PASSWORD"
-                  placeholder="Be smart. Use a good password."
-                  input={{
-                    type: 'password',
-                    value: this.state.verifyPw,
-                    onChange: this.validateForm
-                  }}
-                  meta={{
-                    error: this.state.verifyPwErrMsg,
-                    touched: this.state.verifyPwErr
-                  }}
+                  type="password"
+                  placeholder="Match password input above"
+                  component={this.renderField}
                 />
-                <TextField
-                  id="CELL"
-                  className="input-spacer"
+                <Field
+                  name="cellphone"
                   label="MOBILE PHONE NUMBER"
                   placeholder="999-999-9999"
                   mask="999-999-9999"
                   maskChar="_"
-                  input={{
-                    value: this.state.cellphone,
-                    onChange: this.validateForm
-                  }}
-                  meta={{
-                    error: this.state.cellphoneErrMsg,
-                    touched: this.state.cellphoneErr
-                  }}
+                  component={this.renderField}
                 />
                 <Button variant="action" type="submit">Register</Button>
               </Layout>
@@ -263,6 +65,69 @@ class RegisterForm extends Component{
       </div>
     );
   }
+
+  renderField(field){
+     const {meta : {error, touched}} = field;
+
+     return(
+       <TextField
+         className="input-spacer"
+         label={field.label}
+         placeholder={field.placeholder || ""}
+         tooltip={field.tooltip || null}
+         mask={field.mask || ""}
+         maskChar={field.maskChar || ""}
+         input={{...field.input, type:field.type || "text"}}
+         meta={{error,touched}}
+       />
+     );
+  }
+
+  onSubmit(values){
+    console.log(values);
+    //submit form
+    this.props.registerUser(values);
+    // , () => {
+    //   this.props.history.push('/home');
+    // }); will use when routing...for now log userid
+    console.log(this.props.user);//working...
+  }
 }
 
-export default RegisterForm;
+function  validate(values){
+    const errors = {};
+    //form validation
+    if(!values.name) errors.name = "NAME CANNOT BE EMPTY";
+
+    if(!values.email) errors.email = "EMAIL CANNOT BE EMPTY";
+    else if(!helperValidateEmail(values.email)) errors.email = "IMPROPER EMAIL FORMAT";
+
+    if(!values.verifyEmail) errors.verifyEmail = "FIELD CANNOT BE EMPTY";
+    else if(values.verifyEmail !== values.email) errors.verifyEmail = "EMAILS DO NOT MATCH";
+
+    if(!values.pw) errors.pw = "PASSWORD CANNOT BE EMPTY";
+    else if(!helperValidatePW(values.pw).lower) errors.pw = "PASSWORD NEEDS AT LEAST 1 LOWERCASE LETTER";
+    else if(!helperValidatePW(values.pw).upper) errors.pw = "PASSWORD NEEDS AT LEAST 1 UPPERCASE LETTER";
+    else if(!helperValidatePW(values.pw).digit) errors.pw = "PASSWORD NEEDS AT LEAST 1 DIGIT";
+    else if(!helperValidatePW(values.pw).special) errors.pw = "PASSWORD NEEDS AT LEAST 1 SPECIAL CHARACTER (!,@,#,$,%,^,&,*)";
+    else if(!helperValidatePW(values.pw).limit) errors.pw = "PASSWORD NEEDS AT LEAST 10 CHARACTERS";
+
+    if(!values.verifyPw) errors.verifyPw = "FIELD CANNOT BE EMPTY";
+    else if(values.verifyPw !== values.pw) errors.verifyPw = "PASSWORDS DO NOT MATCH"
+
+    if(!values.cellphone || values.cellphone === "___-___-____") errors.cellphone = "CELLPHONE CANNOT BE EMPTY";
+    else if(!helperValidateCell(values.cellphone)) errors.cellphone = "CELLPHONE CANNOT BE INCOMPLETE";
+
+    return errors;
+}
+
+function mapStateToProps(state) {
+  return {user: state.user};
+}
+
+export default reduxForm({
+  validate,
+  form: 'RegistrationForm'
+})(
+  connect(mapStateToProps,{registerUser})(RegisterForm)
+);
