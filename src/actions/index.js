@@ -1,32 +1,22 @@
 import axios from 'axios';
 import {REGISTER_USER, LOGIN_USER} from '../constants/globals';
 
-export function registerUser(values,cb){
+const API_URL = 'http://localhost:3001';
 
+export function registerUser(values){
 
-  const user = axios.post('/register',values)
-  .then((response) => {
-    cb();
-    return response.data
-  })
-
-  return {
-    type: REGISTER_USER,
-    payload: user
-  }
 }
 
-export function loginUser(values,cb){
+export function loginUser({email, password}){
+  //if req is good...
+  // - Update state to indicate user is authenticated
+  // - Save the JWT token
+  // - Redirect to route '/home'
 
+  //if req is bad...
+  // - Show error to the user
 
-  const user = axios.post('/login',values)
-  .then((response) => {
-    cb();
-    return response.data;
-  });
-
-  return{
-    type: LOGIN_USER,
-    payload: user
+  return function(dispatch) {
+    axios.post(`${API_URL}/login`,{email, password})
   }
 }

@@ -3,7 +3,7 @@ import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
 import {helperValidateEmail,helperValidatePW} from '../../constants/helpers';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {loginUser} from '../../actions';
+import * as actions from '../../actions';
 
 class LoginForm extends Component {
 
@@ -57,6 +57,7 @@ class LoginForm extends Component {
 
   onSubmit(values){
     console.log(values);
+    this.props.loginUser(values);
   }
 }
 
@@ -72,14 +73,10 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps(state) {
-  return {user: state.user};
-}
-
 export default reduxForm({
   validate,
   form: 'LoginForm',
   fields: ['email','password']
 })(
-  connect(mapStateToProps,{loginUser})(LoginForm)
+  connect(null,actions)(LoginForm)
 );
