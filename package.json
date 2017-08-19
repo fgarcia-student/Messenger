@@ -17,7 +17,7 @@
     "redux-promise": "^0.5.3"
   },
   "scripts": {
-    "start": "yarn build && cd server && yarn start",
+    "start": "yarn build && cd server && npm start",
     "start-local": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

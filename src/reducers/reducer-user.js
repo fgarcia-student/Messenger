@@ -6,7 +6,7 @@ export default function(state={},action) {
       return action.payload;
     }
     case LOGIN_USER:{
-      return action.payload.data;
+      return action.payload;
     }
     default:{
       return state;

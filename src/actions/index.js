@@ -4,9 +4,11 @@ import {REGISTER_USER, LOGIN_USER} from '../constants/globals';
 export function registerUser(values,cb){
 
 
-  const user = axios.post('/register',values);
-  //look into axios yelling user is undefined when .then is called on post
-  //.then(()=>{cb()})
+  const user = axios.post('/register',values)
+  .then((response) => {
+    cb();
+    return response.data
+  })
 
   return {
     type: REGISTER_USER,
@@ -17,9 +19,11 @@ export function registerUser(values,cb){
 export function loginUser(values,cb){
 
 
-  const user = axios.post('/login',values);
-  //look into axios yelling user is undefined when .then is called on post
-  //.then(()=>{cb()})
+  const user = axios.post('/login',values)
+  .then((response) => {
+    cb();
+    return response.data;
+  });
 
   return{
     type: LOGIN_USER,

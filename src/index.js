@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import {BrowserRouter,Route, Switch} from 'react-router-dom';
 import promise from 'redux-promise';
 
-import Start from './components/start/start';
+import Start from './components/auth/start';
 import reducers from './reducers';
 import 'athenaeum/lib/assets/styles.css';
 import './style/main.css';

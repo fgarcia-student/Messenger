@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
 import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
-import {helperValidateEmail,helperValidatePW} from '../../../constants/helpers';
+import {helperValidateEmail,helperValidatePW} from '../../constants/helpers';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {loginUser} from '../../../actions';
+import {loginUser} from '../../actions';
 
 class LoginForm extends Component {
 
@@ -56,10 +56,7 @@ class LoginForm extends Component {
   }
 
   onSubmit(values){
-    this.props.loginUser(values, () => {
-      console.log(this.props.user);
-      //callback not firing, axios returning undefined when implemented...
-    });
+    console.log(values);
   }
 }
 
@@ -81,7 +78,8 @@ function mapStateToProps(state) {
 
 export default reduxForm({
   validate,
-  form: 'LoginForm'
+  form: 'LoginForm',
+  fields: ['email','password']
 })(
   connect(mapStateToProps,{loginUser})(LoginForm)
 );

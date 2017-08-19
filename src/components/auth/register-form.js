@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
-import {helperValidateEmail,helperValidatePW,helperValidateCell} from '../../../constants/helpers';
+import {helperValidateEmail,helperValidatePW,helperValidateCell} from '../../constants/helpers';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {registerUser} from '../../../actions';
+import {registerUser} from '../../actions';
 
 class RegisterForm extends Component{
 
@@ -84,10 +84,7 @@ class RegisterForm extends Component{
   }
 
   onSubmit(values){
-    this.props.registerUser(values, () => {
-      console.log(this.props.user);
-      //callback not firing, axios returning undefined when implemented...
-    });
+    console.log(values);
   }
 }
 
