@@ -3,6 +3,7 @@ import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
 import {helperValidateEmail,helperValidatePW,helperValidateCell} from '../../constants/helpers';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
+import {withRouter} from 'react-router-dom';
 import {registerUser} from '../../actions';
 
 class RegisterForm extends Component{
@@ -39,7 +40,7 @@ class RegisterForm extends Component{
                   label="PASSWORD"
                   type="password"
                   placeholder="Follow password rules in tooltip"
-                  tooltip={()=>{alert(`Password must have:\nAt least 1 capital letter\nAt least 1 lowercase letter\nAt least 1 digit\nAt least 1 of the approved special characters[!@#$%^&*]\nAt least 10 characters`)}}
+                  tooltip={`Password must have....At least 1 capital letter....At least 1 lowercase letter....At least 1 digit....At least 1 of the approved special characters[!@#$%^&*]....At least 10 characters`}
                   component={this.renderField}
                 />
                 <Field
@@ -123,5 +124,5 @@ export default reduxForm({
   validate,
   form: 'RegistrationForm'
 })(
-  connect(mapStateToProps,{registerUser})(RegisterForm)
+  connect(mapStateToProps,{registerUser})(withRouter(RegisterForm))
 );

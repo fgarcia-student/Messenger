@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import Title from '../common/title';
 import {GenericCard} from 'athenaeum';
+import {Link} from 'react-router-dom';
 
 
 class Home extends Component {
@@ -26,9 +27,7 @@ class Home extends Component {
 
             </GenericCard>
           </div>
-        <div>
-          <a><Icon icon="user"></Icon></a>
-        </div>
+          <Link to="/logout">LogOut</Link>
       </div>
     );
   }

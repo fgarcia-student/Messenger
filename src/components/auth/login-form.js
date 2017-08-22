@@ -3,9 +3,16 @@ import {Animate,GenericCard,TextField,Button,Layout} from 'athenaeum';
 import {helperValidateEmail,helperValidatePW} from '../../constants/helpers';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
+import {withRouter} from 'react-router-dom';
 import * as actions from '../../actions';
 
 class LoginForm extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
   render(){
     const {handleSubmit} = this.props;
@@ -13,7 +20,7 @@ class LoginForm extends Component {
     return (
       <div id="login-form" className="col-xs-12">
         <Animate animations="slideDown">
-          <form id="FORM" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          <form id="FORM" onSubmit={handleSubmit(this.onSubmit)}>
             <GenericCard variant="box">
               <Layout smallCols={[12]}>
                 <Field
@@ -29,6 +36,7 @@ class LoginForm extends Component {
                   placeholder="10 character minimum"
                   component={this.renderField}
                 />
+                {this.renderError()}
                 <Button variant="action" type="submit">Login</Button>
               </Layout>
             </GenericCard>
@@ -55,9 +63,18 @@ class LoginForm extends Component {
      );
   }
 
+  renderError(){
+    if(this.props.errorMsg){
+      return (
+        <div className="alert alert-danger">
+          <strong>{this.props.errorMsg}</strong>
+        </div>
+      );
+    }
+  }
+
   onSubmit(values){
-    console.log(values);
-    this.props.loginUser(values);
+    this.props.loginUser(values, this.props.history);
   }
 }
 
@@ -73,10 +90,14 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps(state) {
+  return {errorMsg: state.authenticated.error};
+}
+
 export default reduxForm({
   validate,
   form: 'LoginForm',
   fields: ['email','password']
 })(
-  connect(null,actions)(LoginForm)
+  connect(mapStateToProps,actions)(withRouter(LoginForm))
 );
