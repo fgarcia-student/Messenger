@@ -4,17 +4,22 @@ import {helperValidateEmail,helperValidatePW,helperValidateCell} from '../../con
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {withRouter} from 'react-router-dom';
-import {registerUser} from '../../actions';
+import * as actions from '../../actions';
 
 class RegisterForm extends Component{
 
+  constructor(props){
+    super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
   render(){
-    const {handleSubmit} = this.props;
+    const {handleSubmit} = this.props; //pulled from reduxForm
 
     return(
       <div id="register-form" className="col-xs-12">
         <Animate animations="slideDown">
-          <form id="FORM" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          <form id="FORM" onSubmit={handleSubmit(this.onSubmit)}>
             <GenericCard variant="box">
               <Layout smallCols={[12]}>
                 <Field
@@ -58,6 +63,7 @@ class RegisterForm extends Component{
                   maskChar="_"
                   component={this.renderField}
                 />
+                {this.renderError()}
                 <Button variant="action" type="submit">Register</Button>
               </Layout>
             </GenericCard>
@@ -85,7 +91,17 @@ class RegisterForm extends Component{
   }
 
   onSubmit(values){
-    console.log(values);
+    this.props.registerUser(values,this.props.history);
+  }
+
+  renderError(){
+    if(this.props.errorMsg){
+      return (
+        <div className="alert alert-danger">
+          <strong>{this.props.errorMsg}</strong>
+        </div>
+      );
+    }
   }
 }
 
@@ -117,12 +133,12 @@ function  validate(values){
 }
 
 function mapStateToProps(state) {
-  return {user: state.user};
+  return {errorMsg: state.authenticated.error};
 }
 
 export default reduxForm({
   validate,
   form: 'RegistrationForm'
 })(
-  connect(mapStateToProps,{registerUser})(withRouter(RegisterForm))
+  connect(mapStateToProps,actions)(withRouter(RegisterForm))
 );

@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import Title from '../common/title';
 import LoginRegisterBtns from './login-register-buttons';
 import Form from './form-container';
@@ -12,7 +14,8 @@ class Start extends Component {
   }
 
   componentWillMount(){
-    this.setState({clicked: LOGIN});
+    if(this.props.authenticated) this.props.history.push('/home');
+    else this.setState({clicked: LOGIN});
   }
 
   handleClick(e){
@@ -34,4 +37,8 @@ class Start extends Component {
   }
 }
 
-export default Start;
+function mapStateToProps(state) {
+  return {authenticated: state.authenticated.authenticated};
+}
+
+export default connect(mapStateToProps)(withRouter(Start));

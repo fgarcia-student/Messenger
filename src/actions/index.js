@@ -4,8 +4,18 @@ import {AUTH_USER,UNAUTH_USER,AUTH_ERROR} from '../constants/globals';
 
 const API_URL = 'http://localhost:3001';
 
-export function registerUser(values){
-
+export function registerUser(values, history){
+  return function(dispatch) {
+      Promise.resolve(axios.post(`${API_URL}/register`, values))
+      .then((response) => {
+        dispatch({type: AUTH_USER});
+        localStorage.setItem('token', response.data.token);
+        history.push('/home');
+      })
+      .catch((error) => {
+        dispatch(authError(error.response.data.error));
+      })
+  }
 }
 
 export function loginUser(values, history){
@@ -38,4 +48,15 @@ export function authError(error) {
 export function logoutUser() {
   localStorage.removeItem('token');
   return {type: UNAUTH_USER}
+}
+
+export function fetchUserData() {
+  return function(dispatch) {
+    Promise.resolve(axios.get(`${API_URL}/userData`,  {
+      headers: {authorization: localStorage.getItem('token')}
+    }))
+    .then((response) => {
+
+    })
+  }
 }

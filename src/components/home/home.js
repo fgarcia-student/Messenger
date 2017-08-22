@@ -1,12 +1,18 @@
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import * as actions from '../../actions';
 import Title from '../common/title';
 import {GenericCard} from 'athenaeum';
-import {Link} from 'react-router-dom';
 
 
 class Home extends Component {
   constructor(props){
     super(props);
+  }
+
+  componentWillMount(){
+    this.props.fetchUserData();
   }
 
   render(){
@@ -33,4 +39,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect(null,actions)(Home);

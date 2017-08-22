@@ -96,8 +96,7 @@ function mapStateToProps(state) {
 
 export default reduxForm({
   validate,
-  form: 'LoginForm',
-  fields: ['email','password']
+  form: 'LoginForm'
 })(
   connect(mapStateToProps,actions)(withRouter(LoginForm))
 );

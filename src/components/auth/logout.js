@@ -11,7 +11,7 @@ class Logout extends Component {
 
   componentDidMount(){
     this.props.logoutUser();
-    this.timeOut = setTimeout(()=>{this.props.history.push('/')},1000);
+    this.timeOut = setTimeout(()=>{this.props.history.push('/')},300);
   }
 
   componentWillUnmount(){
@@ -22,7 +22,6 @@ class Logout extends Component {
     return(
       <div>
         Goodbye!
-        {}
       </div>
     );
   }
