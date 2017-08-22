@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Synopsis
 
-Messenger is a real time chat application built entirely with React and Redux, using Node and Express as an API and MongoDB as the database.
+Messenger is a real time chat application built entirely with React and Redux, using Node and Express to build the API and MongoDB as the database.
 
 ## Motivation
 
