@@ -1,18 +1,25 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import * as actions from '../../actions';
 import Title from '../common/title';
-import {GenericCard} from 'athenaeum';
-
+import UserCard from './user-card';
 
 class Home extends Component {
-  constructor(props){
-    super(props);
-  }
 
   componentWillMount(){
     this.props.fetchUserData();
+  }
+
+  renderFriends(){
+    const data = this.props.friendData;
+    const convos = [];
+    if(data){
+      data.conversations.forEach((chat,index) => {
+        convos.push(<UserCard data={chat} key={chat._id} />);
+      });
+    }
+    return convos;
   }
 
   render(){
@@ -20,23 +27,16 @@ class Home extends Component {
       <div className="container">
         <Title title="#HOME"/>
           <div className="list-group">
-            <GenericCard className="list-group-item">
-
-            </GenericCard>
-            <GenericCard className="list-group-item">
-
-            </GenericCard>
-            <GenericCard className="list-group-item">
-
-            </GenericCard>
-            <GenericCard className="list-group-item">
-
-            </GenericCard>
+            {this.renderFriends()}
           </div>
-          <Link to="/logout">LogOut</Link>
+        <Link to="/logout">LogOut</Link>
       </div>
     );
   }
 }
 
-export default connect(null,actions)(Home);
+function mapStateToProps({user}) {
+  return {friendData: user.friendData};
+}
+
+export default connect(mapStateToProps,actions)(withRouter(Home));

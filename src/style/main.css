@@ -7,8 +7,22 @@
   margin: .2em 0;
 }
 
-.user-card * {
-  display: inline;
+.user-card{
+  position: relative;
+}
+
+.chat-id{
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  font-size: 18px;
+}
+
+.prv-message {
+  position: absolute;
+  left: 5px;
+  top: 30px;
+  font-size: 12px;
 }
 
 .no-padding {

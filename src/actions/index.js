@@ -1,12 +1,17 @@
 import axios from 'axios';
 import Promise from 'bluebird';
-import {AUTH_USER,UNAUTH_USER,AUTH_ERROR} from '../constants/globals';
+import {
+  AUTH_USER,
+  UNAUTH_USER,
+  AUTH_ERROR,
+  SET_FRIEND_DATA
+} from '../constants/globals';
 
 const API_URL = 'http://localhost:3001';
 
 export function registerUser(values, history){
   return function(dispatch) {
-      Promise.resolve(axios.post(`${API_URL}/register`, values))
+      return Promise.resolve(axios.post(`${API_URL}/register`, values))
       .then((response) => {
         dispatch({type: AUTH_USER});
         localStorage.setItem('token', response.data.token);
@@ -20,7 +25,7 @@ export function registerUser(values, history){
 
 export function loginUser(values, history){
   return function(dispatch) {
-    Promise.resolve(axios.post(`${API_URL}/login`,values))
+    return Promise.resolve(axios.post(`${API_URL}/login`,values))
     .then((response) => {
       //if req is good...
       // - Update state to indicate user is authenticated
@@ -33,6 +38,7 @@ export function loginUser(values, history){
     .catch((error) => {
       //if req is bad...
       // - Show error to the user
+      console.log(error.response);
       dispatch(authError('Bad Login Information'));
     });
   }
@@ -52,11 +58,11 @@ export function logoutUser() {
 
 export function fetchUserData() {
   return function(dispatch) {
-    Promise.resolve(axios.get(`${API_URL}/userData`,  {
+    return Promise.resolve(axios.get(`${API_URL}/userData`,  {
       headers: {authorization: localStorage.getItem('token')}
     }))
     .then((response) => {
-
+      dispatch({type: SET_FRIEND_DATA, payload: response.data})
     })
   }
 }
